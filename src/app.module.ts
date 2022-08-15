@@ -33,9 +33,9 @@ import { PassportModule } from '@nestjs/passport';
       //   path: 'backup',
       //   module: BackupModule
       // }
-    ])  
+    ]),
   ],
   // controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

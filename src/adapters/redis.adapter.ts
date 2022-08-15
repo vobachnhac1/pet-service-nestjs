@@ -9,7 +9,9 @@ export class RedisIoAdapter extends IoAdapter {
 
   constructor(app, private readonly config: ConfigService) {
     super(app);
-    const pubClient = createClient({ url: this.config.get('REDIS_ADAPTER_URL') });
+    const pubClient = createClient({
+      url: this.config.get('REDIS_ADAPTER_URL'),
+    });
     const subClient = pubClient.duplicate();
     this.redisAdapter = createAdapter(pubClient, subClient);
   }
