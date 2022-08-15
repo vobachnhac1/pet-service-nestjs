@@ -10,9 +10,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { json, urlencoded } from 'body-parser';
-
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { RedisIoAdapter } from './adapters/redis.adapter';
+import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  // tạo socket
+  const configService = app.get(ConfigService);
+  app.useWebSocketAdapter(new RedisIoAdapter(app, configService));
+
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.use(json({ limit: '100mb' }));
